@@ -1,0 +1,47 @@
+# 通义千问大模型配置
+
+# 调用API KEY
+TONGYI_API_KEY: sk-40304a78ceba4ac7b82e4fa32ae52787
+# 调用BASE URL
+TONGYI_BASE_URL: https://dashscope.aliyuncs.com/compatible-mode/v1
+# 模型名称
+MODEL_NAME: qwen-plus
+
+
+# 领域划分
+DOMAIN:
+  - key: IOT垂域
+    name: IOT垂域
+    desc: 对点灯、空调等设备的控制
+
+  - key: 会议控制领域
+    name: 会议控制领域
+    desc: 对会议的查看预约、查看、取消
+
+  - key: 闲聊领域
+    name: 闲聊领域
+    desc: 非控制类的对话问答
+
+# 设备清单
+DEVICE_LIST:
+  - key: 摄像头
+
+  - key: 空间人数传感器
+
+  - key: 智能控制面板
+
+  - key: 窗帘
+
+  - key: TCP插座
+
+  - key: GW插座
+
+  - key: GW开关
+
+  - key: 电源时序器
+
+  - key: 环境检测
+
+  - key: 空调控制器
+
+  - key: 录播主机
