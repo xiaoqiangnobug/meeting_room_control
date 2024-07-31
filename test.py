@@ -18,8 +18,9 @@ from libs.prompts.main import prompt
 
 messages = [
     {'role': 'system', 'content': prompt.strip()},
-    {'role': 'user', 'content': '帮我打开灯'}]
+    {'role': 'user', 'content': '帮我上移摄像头'}]
 
 start_time = time.time()
-ChatClient().chat(messages=messages)
+print(prompt)
+print(ChatClient()._chat(messages=messages))
 print(time.time() - start_time)

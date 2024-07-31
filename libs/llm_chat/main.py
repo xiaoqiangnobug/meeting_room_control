@@ -33,6 +33,7 @@ class ChatClient:
             model=CONFIG.MODEL_NAME,
             messages=messages
         )
+        print(res)
         return json.loads(res.choices[0].message.content)
 
     async def chat(self, messages: list):
