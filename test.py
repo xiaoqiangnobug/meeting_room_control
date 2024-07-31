@@ -18,7 +18,7 @@ from libs.prompts.main import prompt
 
 messages = [
     {'role': 'system', 'content': prompt.strip()},
-    {'role': 'user', 'content': '帮我上移摄像头'}]
+    {'role': 'user', 'content': '帮我打开摄像头'}]
 
 start_time = time.time()
 print(prompt)
