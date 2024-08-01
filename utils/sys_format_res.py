@@ -4,7 +4,7 @@
 
 File: sys_format_res.py.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 接口响应格式化
 

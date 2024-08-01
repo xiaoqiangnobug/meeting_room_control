@@ -4,7 +4,7 @@
 
 File: req_data.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 
@@ -13,8 +13,6 @@ Date: 2024/7/30 22:58
 """
 
 from pydantic import BaseModel, Field
-from typing import Union, Optional
-from enum import Enum
 
 
 class ControlChatReqData(BaseModel):
@@ -23,8 +21,8 @@ class ControlChatReqData(BaseModel):
     class _ChatMessage(BaseModel):
         chatMessage_id: str = Field(alias='chatMessageId', max_length=32, description='消息Id')
         role: str
-        content: str = Field(default=None, alias='rawContent', description='消息内容')
-        audio_content: str = Field(default=None, alias='audioContent', description='音频内容')
+        content: str = Field(default='', alias='rawContent', description='消息内容')
+        audio_content: str = Field(default='', alias='audioContent', description='音频内容')
 
     class _InitOpening(BaseModel):
         language: str = 'Ch'

@@ -4,7 +4,7 @@
 
 File: test.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 
@@ -21,7 +21,7 @@ messages = [
     {'role': 'user', 'content': '设置录制状态关闭'}]
 
 start_time = time.time()
-# print(prompt)
+print(prompt)
 print(ChatClient()._chat(messages=messages))
 print(time.time() - start_time)
 

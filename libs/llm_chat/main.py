@@ -4,7 +4,7 @@
 
 File: main.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 
@@ -33,10 +33,8 @@ class ChatClient:
             model=CONFIG.MODEL_NAME,
             messages=messages
         )
-
         return json.loads(res.choices[0].message.content)
 
     async def chat(self, messages: list):
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, self._chat, messages)
-

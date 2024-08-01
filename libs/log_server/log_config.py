@@ -4,7 +4,7 @@
 
 File: log_config.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 
@@ -38,25 +38,25 @@ LOG_CONFIG = {
     'incremental': False,  # 配置是否要被解读为在现有配置上新增 如果 incremental 为 True 则该省会被忽略
     'formatters': {
         'error': {
-            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            # '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
             'format': '{asctime} {levelname} {message} {pathname} {lineno} {process} {thread}',
             'style': '{',  # 可选 {和$ 格式化中的引用格式
             'validate': True,  # 配置日志记录器时是否对验证格式化器进行验证
-            'json_ensure_ascii': False
+            # 'json_ensure_ascii': False
         },
         'warning': {
-            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            # '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
             'format': '{asctime} {levelname} {message} {lineno} {process} {thread}',
             'style': '{',
             'validate': True,
-            'json_ensure_ascii': False
+            # 'json_ensure_ascii': False
         },
         'info': {
-            '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+            # '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
             'format': '{asctime} {levelname} {message} {process}',
             'style': '{',
             'validate': True,
-            'json_ensure_ascii': False
+            # 'json_ensure_ascii': False
         }
     },
     'filters': {

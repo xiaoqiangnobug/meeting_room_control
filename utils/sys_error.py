@@ -4,7 +4,7 @@
 
 File: sys_error.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 

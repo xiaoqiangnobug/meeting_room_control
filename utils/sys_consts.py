@@ -4,7 +4,7 @@
 
 File: sys_consts.py.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 系统常量
 

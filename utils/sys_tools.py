@@ -4,7 +4,7 @@
 
 File: sys_tools.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 系统工具
 

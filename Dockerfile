@@ -1,4 +1,4 @@
-FROM registry.cn-beijing.aliyuncs.com/sndata-hz/cuda:12.0.1-runtime-ubuntu22.04
+FROM ubuntu:22.04
 
 # 镜像元信息
 LABEL MAINTAINER=weikaiqiang
@@ -19,19 +19,6 @@ RUN DEBIAN_FRONTEND=noninteractive && \
         apt update && \
         apt install --no-install-recommends -y build-essential && \
         apt install --no-install-recommends -y python3.10-dev && \
-        apt install --no-install-recommends -y nginx && \
-        apt install --no-install-recommends -y wget && \
-        wget https://www.openssl.org/source/openssl-1.1.1q.tar.gz && \
-        tar xvf openssl-1.1.1q.tar.gz && \
-        cd openssl-1.1.1q && \
-        ./config && \
-        make && \
-        make install && \
-        sed -i '1s;^;/usr/local/lib\n;' /etc/ld.so.conf && \
-        ldconfig && \
-        cd .. && \
-        rm -f openssl-1.1.1q.tar.gz && \
-        rm -rf openssl-1.1.1q && \
         apt install --no-install-recommends -y vim && \
         apt install --no-install-recommends -y python3.10 && \
         apt install --no-install-recommends -y python3-virtualenv && \
@@ -44,7 +31,6 @@ ADD ./ /opt/project/
 
 # supervisor 配置
 ADD ./deployment/files/supervisor.conf /etc/supervisor/conf.d/server_supervisor.conf
-ADD ./deployment/files/nginx.conf /etc/nginx/conf.d/server.conf
 
 # 虚拟环境创建&依赖包安装
 RUN cd /opt/py_virtualenvs && \

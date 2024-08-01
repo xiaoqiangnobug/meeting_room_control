@@ -4,7 +4,7 @@
 
 File: main.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 
@@ -43,11 +43,15 @@ CONTROL_COMMAND = """
     例如：
         IOT垂域下,打开xxx设备 action的值则是IOT垂域意图中打开动过的意图值
     规则三：基于规则一和规则二的结果对需要进行的动作进行槽位提取，每个领域的槽位提取说明如下：
-    IOT设备控制(槽位信息中key是对应JSON的输出字段，desc是槽位解释，values是取值范围，如果取值范围空则需要根据文本提取)：{% for obj in data.DEVICE_LIST %}
+    IOT设备控制(槽位信息中key是对应JSON的输出字段，desc是槽位解释，values是取值范围，如果取值范围空则需要根据文本提取): {% for obj in data.DEVICE_LIST %}
         (设备名称：{{obj.key}} 
         {%for command in obj.actions %}动作名称: {{command.command}}, 槽位：[{%for slot in command.slots%}{{slot}}){%endfor%}]{%endfor%}){%endfor%}
+    会议控制(槽位信息中key是对应JSON的输出字段，desc是槽位解释，values是取值范围，如果取值范围空则需要根据文本提取): {%for obj in data.MEETING_INTENT%}
+        (会议操作动作: {{obj.name}}) [{% for slot in obj.slots %}{{slot}}{%endfor%}]{%endfor%}
     JSON字段的名称：slotMap，将提取都得对应槽位数据赋值给slotMap字段
     现在的时间是：{{data.DATATIME}},注意区分延迟打开关闭和定时打开关闭的区别,槽位提取注意多选值和单选值，没有表明多选值的都是单选值，注意多选值的大小写数字
+    开放域问答垂域(槽位信息中key是对应JSON的输出字段，desc是槽位解释，values是取值范围，如果取值范围空则需要根据文本提取): {%for obj in data.OPEN_DOMAIN%}
+        (槽位: {{obj.slots}}){%endfor%}
     完整输出举例：
     文本：帮我禁用蜂鸣模式 输出: {"domain": "iot-domain", "action": "update_device_status", "slotMap": {"deviceName": "环境检测", "deviceStatus": "蜂鸣模式设置", "status": "禁用"}}
     按照规则，直接输出可以使用的JSON原本数据不需要其它任何格式

@@ -4,7 +4,7 @@
 
 File: sys_error_handler.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 

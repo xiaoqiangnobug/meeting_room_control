@@ -4,7 +4,7 @@
 
 File: sys_log_config.py.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 日志配置
 

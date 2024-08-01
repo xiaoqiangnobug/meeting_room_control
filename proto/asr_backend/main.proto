@@ -1,0 +1,21 @@
+// 文件头
+syntax = "proto3";
+package asr_backend;
+
+// 数据定义
+message Request {
+  bytes data = 1;  // Python格式数据-> pickle序列化后的字节数据,具体参照使用方注释说明
+}
+
+message NullRequest {}  // 空请求
+
+message Response {
+  bytes data = 1;  // Python格式数据-> pickle序列化后的字节数据,具体参照使用方注释说明
+}
+
+// 服务定义
+
+service AsrBackend {
+    // 视频内容过滤
+    rpc AudioToText (Request) returns (Response) {};
+}

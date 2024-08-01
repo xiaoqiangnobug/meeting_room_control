@@ -4,7 +4,7 @@
 
 File: config.py
 
-Author: weikaiqiang
+Author: xiaoqiang
 
 Explanation: 
 
