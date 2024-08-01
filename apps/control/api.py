@@ -31,6 +31,6 @@ async def control_chat(req_data: ControlChatReqData):
     messages = req_data.chat_messages
     messages.insert(0, {'role': 'system', 'content': prompt})
     ans = await ChatClient().chat(messages=req_data.chat_messages)
-    logger.info(msg=f'文本: {req_data.chat_messages[0].content}  拆封结果: {ans}')
+    logger.info(msg=f'文本: {req_data.chat_messages[0]["content"]}  拆封结果: {ans}')
 
     return ans

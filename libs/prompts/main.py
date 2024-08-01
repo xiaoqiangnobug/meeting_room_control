@@ -47,7 +47,7 @@ CONTROL_COMMAND = """
         (设备名称：{{obj.key}} 
         {%for command in obj.actions %}动作名称: {{command.command}}, 槽位：[{%for slot in command.slots%}{{slot}}){%endfor%}]{%endfor%}){%endfor%}
     JSON字段的名称：slotMap，将提取都得对应槽位数据赋值给slotMap字段
-    现在的时间是：{{data.DATATIME}},注意区分延迟打开关闭和定时打开关闭的区别
+    现在的时间是：{{data.DATATIME}},注意区分延迟打开关闭和定时打开关闭的区别,槽位提取注意多选值和单选值，没有表明多选值的都是单选值，注意多选值的大小写数字
     完整输出举例：
     文本：帮我禁用蜂鸣模式 输出: {"domain": "iot-domain", "action": "update_device_status", "slotMap": {"deviceName": "环境检测", "deviceStatus": "蜂鸣模式设置", "status": "禁用"}}
     按照规则，直接输出可以使用的JSON原本数据不需要其它任何格式
