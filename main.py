@@ -25,6 +25,7 @@ from utils.sys_error import CustomError
 from utils.sys_error_handler import param_error_handler, custom_error_handler, sys_error_handler
 
 from apps.control import router as control_router
+from apps.chat import router as chat_router
 
 # 加载日志配置
 logging.config.dictConfig(LOG_CONFIG)
@@ -74,6 +75,8 @@ app.add_middleware(
 
 # 注册子模块路由
 app.include_router(prefix='/api', router=control_router)
+app.include_router(prefix='/api', router=chat_router)
+
 if __name__ == '__main__':
     import uvicorn
 

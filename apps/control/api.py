@@ -39,7 +39,7 @@ async def control_chat(req_data: ControlChatReqData):
         audio = base64.b64decode(audio)
         messages[-1].content = audio_to_text(audio=io.BytesIO(audio))
         messages[-1].audio_content = ''
-    ans = await ChatClient().chat(messages=messages)
+    ans = await ChatClient().json_chat(messages=messages)
     result = {
         'query': req_data.chat_messages[-1].content,
         'domain': ans['domain'],
