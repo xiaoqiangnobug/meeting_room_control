@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/qqls/arm64v8-ubuntu
+FROM registry.cn-hangzhou.aliyuncs.com/qqls/arm64v8-ubuntu:22.04
 
 # 镜像元信息
 LABEL MAINTAINER=weikaiqiang
