@@ -35,7 +35,7 @@ ADD ./deployment/files/supervisor.conf /etc/supervisor/conf.d/server_supervisor.
 # 虚拟环境创建&依赖包安装
 RUN cd /opt/py_virtualenvs && \
     python3 -m virtualenv -p python3 py && \
-    /opt/py_virtualenvs/py/bin/pip install --no-cache-dir -r /opt/project/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple && \
+    /opt/py_virtualenvs/py/bin/pip install --no-cache-dir -r /opt/project/requirements.txt -i https://mirrors.aliyun.com/pypi/simple && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
