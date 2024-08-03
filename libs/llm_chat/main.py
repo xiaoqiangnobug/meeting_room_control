@@ -45,7 +45,7 @@ class ChatClient:
         # 模型JSON数据提取
         ans = self._chat(messages=messages)
         try:
-            return json.dumps(ans)
+            return json.loads(ans)
         except Exception as e:
             logger.warning(msg='首次提取异常,重新尝试', exc_info=e)
             messages.extend([
@@ -54,7 +54,7 @@ class ChatClient:
             ])
             ans = self._chat(messages=messages)
             try:
-                return json.dumps(ans)
+                return json.loads(ans)
             except Exception as e:
                 logger.error(msg=f'输入 {messages} 推理失败', exc_info=e)
                 raise CustomError(code=SysSpecialResCode.LLM_JSON_ERROR)
