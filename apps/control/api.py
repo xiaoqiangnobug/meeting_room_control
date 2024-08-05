@@ -37,7 +37,7 @@ async def control_chat(req_data: ControlChatReqData):
     audio = messages[-1].audio_content
     if audio:
         audio = base64.b64decode(audio)
-        messages[-1].content = audio_to_text(audio=io.BytesIO(audio))
+        messages[-1].content = await audio_to_text(audio=io.BytesIO(audio))
         messages[-1].audio_content = ''
     ans = await ChatClient().json_chat(messages=messages)
     result = {
