@@ -8,6 +8,7 @@ ENV TZ=Asia/Shanghai
 
 # 安装必要的依赖包
 RUN mkdir -p /opt/project /opt/log /opt/py_virtualenvs /opt/setup && \
+        chmod 1777 /tmp/ && \
         apt update && \
         apt install --no-install-recommends ca-certificates --reinstall -y
 
