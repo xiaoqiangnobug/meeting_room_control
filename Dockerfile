@@ -4,13 +4,15 @@ FROM arm64v8/ubuntu:22.04
 LABEL MAINTAINER=weikaiqiang
 # 环境设置
 ENV LANG=C.UTF-8
-ENV TZ=Asia/Shanghai
 
 # 安装必要的依赖包
 RUN mkdir -p /opt/project /opt/log /opt/py_virtualenvs /opt/setup && \
         chmod 1777 /tmp/ && \
         apt update && \
-        apt install --no-install-recommends ca-certificates --reinstall -y
+        apt install --no-install-recommends ca-certificates --reinstall -y && \
+        apt install --no-install-recommends tzdata -y
+
+ENV TZ=Asia/Shanghai
 
 WORKDIR /opt/project/
 # 替换镜像源

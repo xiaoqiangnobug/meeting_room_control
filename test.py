@@ -18,7 +18,7 @@ from libs.prompts.main import prompt
 print(prompt)
 messages = [
     {'role': 'system', 'content': prompt.strip()},
-    {'role': 'user', 'content': '帮我约个11点到14点的会，会叫aaa'}]
+    {'role': 'user', 'content': '帮我约个7点到8点的会，会叫aaa'}]
 
 start_time = time.time()
 print(ChatClient()._chat(messages=messages))
