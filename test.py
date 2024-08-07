@@ -15,10 +15,10 @@ Date: 2024/7/30 21:55
 import time
 from libs.llm_chat import ChatClient
 from libs.prompts.main import prompt
-
+print(prompt)
 messages = [
     {'role': 'system', 'content': prompt.strip()},
-    {'role': 'user', 'content': '帮我设置导播合成模式为两合成二等分'}]
+    {'role': 'user', 'content': '帮我约个11点到14点的会，会叫aaa'}]
 
 start_time = time.time()
 print(ChatClient()._chat(messages=messages))
