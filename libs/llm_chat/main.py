@@ -15,6 +15,8 @@ Date: 2024/7/30 21:44
 import json
 import logging
 import asyncio
+import time
+
 from openai import OpenAI
 from sys_config import CONFIG
 from utils.sys_error import CustomError
@@ -32,10 +34,12 @@ class ChatClient:
     def _chat(self, messages: list):
         # 模型推理功能
         try:
+            start_time = time.time()
             res = self.client.chat.completions.create(
                 model=CONFIG.MODEL_NAME,
                 messages=messages
             )
+            logger.info(msg=f'推理耗时: {time.time() - start_time}')
             return res.choices[0].message.content
         except Exception as e:
             logger.error(msg=f'输入信息 {json.dumps(messages)} 推理失败', exc_info=e)

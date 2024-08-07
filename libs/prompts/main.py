@@ -49,12 +49,12 @@ CONTROL_COMMAND = """
     会议控制(槽位信息中key是对应JSON的输出字段，desc是槽位解释，values是取值范围，如果取值范围空则需要根据文本提取): {%for obj in data.MEETING_INTENT%}
         (会议操作动作: {{obj.name}}) [{% for slot in obj.slots %}{{slot}}{%endfor%}]{%endfor%}
     JSON字段的名称：slotMap，将提取都得对应槽位数据赋值给slotMap字段
-    现在的时间是：{{data.DATATIME}},注意区分延迟打开关闭和定时打开关闭的区别,槽位提取注意多选值和单选值，没有表明多选值的都是单选值，注意多选值的大小写数字
+    注意区分延迟打开关闭和定时打开关闭的区别,槽位提取注意多选值和单选值，没有表明多选值的都是单选值，注意多选值的大小写数字,注意会议控制时的日期提取
     开放域问答垂域(槽位信息中key是对应JSON的输出字段，desc是槽位解释，values是取值范围，如果取值范围空则需要根据文本提取): {%for obj in data.OPEN_DOMAIN%}
         (槽位: {{obj.slots}}){%endfor%}
     完整输出举例：
     文本：帮我禁用蜂鸣模式 输出: {"domain": "iot-domain", "action": "update_device_status", "slotMap": {"deviceName": "环境检测", "deviceStatus": "蜂鸣模式设置", "status": "禁用"}}
-    按照规则，直接输出可以使用的JSON原本数据不需要其它任何格式
+    现在的时间是：{{data.DATATIME}},按照规则，直接输出可以使用的JSON原本数据不需要其它任何格式
 """
 
 prompt = Template(source=CONTROL_COMMAND).render(data=data).strip()
