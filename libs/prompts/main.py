@@ -57,4 +57,23 @@ CONTROL_COMMAND = """
     现在的时间是：{{data.DATATIME}},按照规则，直接输出可以使用的JSON原本数据不需要其它任何格式
 """
 
-prompt = Template(source=CONTROL_COMMAND).render(data=data).strip()
+# prompt = Template(source=CONTROL_COMMAND).render(data=data).strip()
+
+
+class Prompt:
+    # Prompt模板统一管理
+
+    @property
+    def control(self):
+        data = {
+            'DEVICE_LIST': CONFIG.DEVICE_LIST,
+            'IOT_INTENT': CONFIG.IOT_INTENT,
+            'MEETING_INTENT': CONFIG.MEETING_INTENT,
+            'OPEN_DOMAIN': CONFIG.OPEN_DOMAIN,
+            'DATATIME': f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
+        }
+
+        return Template(source=CONTROL_COMMAND).render(data=data).strip()
+
+
+PROMPT = Prompt()

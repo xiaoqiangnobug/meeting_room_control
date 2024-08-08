@@ -14,10 +14,10 @@ Date: 2024/7/30 21:55
 
 import time
 from libs.llm_chat import ChatClient
-from libs.prompts.main import prompt
-print(prompt)
+from libs.prompts.main import PROMPT
+print(PROMPT.control)
 messages = [
-    {'role': 'system', 'content': prompt.strip()},
+    {'role': 'system', 'content': PROMPT.control},
     {'role': 'user', 'content': '帮我约个7点到8点的会，会叫aaa'}]
 
 start_time = time.time()

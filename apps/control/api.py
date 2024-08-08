@@ -20,7 +20,7 @@ from utils.sys_format_res import async_normal_response
 from .req_data import ControlChatReqData
 from .res_data import ControlChatResData
 from libs.llm_chat import ChatClient
-from libs.prompts import prompt
+from libs.prompts import PROMPT
 from libs.grpc_client.asr_client import audio_to_text
 
 router = APIRouter()
@@ -33,7 +33,7 @@ logger = logging.getLogger('logger')
 async def control_chat(req_data: ControlChatReqData):
     # 聊天控制接口
     messages = req_data.chat_messages
-    messages.insert(0, {'role': 'system', 'content': prompt})
+    messages.insert(0, {'role': 'system', 'content': PROMPT.control})
     audio = messages[-1].audio_content
     if audio:
         audio = base64.b64decode(audio)

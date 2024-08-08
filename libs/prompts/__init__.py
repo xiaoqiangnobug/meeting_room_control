@@ -12,4 +12,4 @@ Date: 2024/7/30 22:00
 
 """
 
-from .main import prompt
+from .main import PROMPT
