@@ -27,7 +27,7 @@ data = {
 }
 """ (动作：{{command.command}}, 槽位信息：({% for slot in command.slots %}[字段key: {{slot.key}},槽位含义：{{slot.desc}}, 槽位可选值: [{%for value in slot.values%}{%endfor%}]]{%endfor%})){%endfor%}"""
 CONTROL_COMMAND = """
-    我需要你协助我将文本内容提取成标准的JSON数据,提取规则如下：
+    我需要你协助我根据聊天内容提取成标准的JSON数据,提取规则如下：
     规则一：将对文本的控制垂域分类一共有三个垂域：
         IOT垂域：实现对 {% for iot in data.DEVICE_LIST %}{{iot.key}}、{% endfor %}的设备的操作 
         会议控制垂域：预定会议、查看当前用户预约的会议、取消当前用户预定的某个会议
@@ -57,6 +57,7 @@ CONTROL_COMMAND = """
     现在的时间是：{{data.DATATIME}},按照规则，直接输出可以使用的JSON原本数据不需要其它任何格式
 """
 
+
 # prompt = Template(source=CONTROL_COMMAND).render(data=data).strip()
 
 
@@ -77,3 +78,13 @@ class Prompt:
 
 
 PROMPT = Prompt()
+
+
+class BasePrompt:
+
+    @property
+    def prompt(self):
+        return self._prompt()
+
+    def _prompt(self):
+        raise Exception('子类实现')

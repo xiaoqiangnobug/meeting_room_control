@@ -42,14 +42,14 @@ class ChatClient:
             logger.info(msg=f'推理耗时: {time.time() - start_time}')
             return res.choices[0].message.content
         except Exception as e:
-            logger.error(msg=f'输入信息 {json.dumps(messages)} 推理失败', exc_info=e)
+            logger.error(msg=f'输入信息 {json.dumps(messages, ensure_ascii=False)} 推理失败', exc_info=e)
             raise CustomError(code=SysSpecialResCode.LLM_ERROR, msg='LLM模型推理失败，请检查API-KEY是否可用')
 
     def _json_chat(self, messages: list):
         # 模型JSON数据提取
         ans = self._chat(messages=messages)
         try:
-            return json.loads(ans)
+            return json.loads(ans[7:-3])
         except Exception as e:
             logger.warning(msg='首次提取异常,重新尝试', exc_info=e)
             messages.extend([
@@ -58,10 +58,10 @@ class ChatClient:
             ])
             ans = self._chat(messages=messages)
             try:
-                return json.loads(ans)
+                return json.loads(ans[7:-3])
             except Exception as e:
                 logger.error(msg=f'输入 {messages} 推理失败', exc_info=e)
-                raise CustomError(code=SysSpecialResCode.LLM_JSON_ERROR)
+                raise CustomError(code=SysSpecialResCode.LLM_JSON_ERROR, msg=SysSpecialResCode.LLM_JSON_ERROR)
 
     async def chat(self, messages: list):
         loop = asyncio.get_running_loop()

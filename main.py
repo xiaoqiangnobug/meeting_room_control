@@ -32,36 +32,36 @@ logging.config.dictConfig(LOG_CONFIG)
 app = FastAPI()
 
 
-# 注册全局入参校验异常处理模块
-@app.exception_handler(RequestValidationError)
-async def param_error_intercept(request, exc):
-    return param_error_handler(req=request, error=exc)
-
-
-@app.exception_handler(405)
-async def error_405_intercept(request, exc):
-    data = {'code': str(SysResCode.METHOD_NOT_ALLOWED), 'data': '405 Method Not Allowed', 'message': '失败',
-            'success': False, 'time': int(time.time())}
-    return JSONResponse(data, status_code=405)
-
-
-@app.exception_handler(404)
-async def error_404_intercept(request, exc):
-    data = {'code': str(SysResCode.PATH_NOT_FOUND), 'data': '404 Not Found', 'message': '失败', 'success': False,
-            'time': int(time.time())}
-    return JSONResponse(data, status_code=404)
-
-
-# 注册全局自定义异常处理模块
-@app.exception_handler(CustomError)
-async def custom_error_intercept(request, exc):
-    return custom_error_handler(req=request, error=exc)
-
-
-# 注册全局未知异常处理模块
-@app.exception_handler(Exception)
-async def sys_error_intercept(request, exc):
-    return sys_error_handler(req=request, error=exc)
+# # 注册全局入参校验异常处理模块
+# @app.exception_handler(RequestValidationError)
+# async def param_error_intercept(request, exc):
+#     return param_error_handler(req=request, error=exc)
+#
+#
+# @app.exception_handler(405)
+# async def error_405_intercept(request, exc):
+#     data = {'code': str(SysResCode.METHOD_NOT_ALLOWED), 'data': '405 Method Not Allowed', 'message': '失败',
+#             'success': False, 'time': int(time.time())}
+#     return JSONResponse(data, status_code=405)
+#
+#
+# @app.exception_handler(404)
+# async def error_404_intercept(request, exc):
+#     data = {'code': str(SysResCode.PATH_NOT_FOUND), 'data': '404 Not Found', 'message': '失败', 'success': False,
+#             'time': int(time.time())}
+#     return JSONResponse(data, status_code=404)
+#
+#
+# # 注册全局自定义异常处理模块
+# @app.exception_handler(CustomError)
+# async def custom_error_intercept(request, exc):
+#     return custom_error_handler(req=request, error=exc)
+#
+#
+# # 注册全局未知异常处理模块
+# @app.exception_handler(Exception)
+# async def sys_error_intercept(request, exc):
+#     return sys_error_handler(req=request, error=exc)
 
 
 # CORS跨域设置

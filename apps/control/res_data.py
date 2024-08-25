@@ -22,7 +22,7 @@ class ControlChatResData(Schema):
         query = fields.Str()
         domain = fields.Str()
         action = fields.Str()
-        dialogStatus = fields.Dict(default={'status': 'FINISH', 'turns': 1})
+        dialogStatus = fields.Dict(attribute='dialog_status')
         slotMap = fields.Dict(attribute='slot_map')
 
     event = fields.Str(default='INTENT')
