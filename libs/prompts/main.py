@@ -25,7 +25,6 @@ data = {
     'OPEN_DOMAIN': CONFIG.OPEN_DOMAIN,
     'DATATIME': f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
 }
-""" (动作：{{command.command}}, 槽位信息：({% for slot in command.slots %}[字段key: {{slot.key}},槽位含义：{{slot.desc}}, 槽位可选值: [{%for value in slot.values%}{%endfor%}]]{%endfor%})){%endfor%}"""
 CONTROL_COMMAND = """
     我需要你协助我根据聊天内容提取成标准的JSON数据,提取规则如下：
     规则一：将对文本的控制垂域分类一共有三个垂域：
@@ -77,10 +76,10 @@ class Prompt:
         return Template(source=CONTROL_COMMAND).render(data=data).strip()
 
 
-PROMPT = Prompt()
-
-
 class BasePrompt:
+
+    def __init__(self, extra_paras=None):
+        self.extra_paras = extra_paras
 
     @property
     def prompt(self):

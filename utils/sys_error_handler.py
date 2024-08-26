@@ -52,4 +52,5 @@ def custom_error_handler(req: Request, error: CustomError):
     # 自定义异常处理
     data = {'code': str(error.code), 'data': None, 'message': error.msg, 'success': False,
             'time': int(time.time())}
+    logger.warning(msg=f'自定义异常触发: {error.msg} code: {error.code}')
     return JSONResponse(content=data)

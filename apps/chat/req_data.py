@@ -23,4 +23,5 @@ class ChatReqData(BaseModel):
         content: str = Field(default='', alias='rawContent', description='消息内容')
 
     init_inputs: dict = Field(default=None, alias='initInputs', description='会话动态变量值')
+    chat_id: str = Field(max_length=32, alias='chatId', description='会话ID')
     chat_messages: list[_ChatMessage] = Field(alias='chatMessages', description='对话消息列表')

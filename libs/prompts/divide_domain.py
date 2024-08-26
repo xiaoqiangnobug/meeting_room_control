@@ -18,8 +18,13 @@ from jinja2 import Template
 
 
 class DivideDomainPrompt(BasePrompt):
-    template_content = """
-        我需要你协助我根据聊天内容提取成标准的JSON数据,提取规则如下：
+
+    @property
+    def _template_content(self):
+        return """
+        我需要你协助我根据聊天内容提取成标准的JSON数据
+        聊天内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} {% endfor %}
+        提取规则如下：
         一共有三个垂域：
             IOT垂域：实现对{% for iot in data.DEVICE_LIST %}{{iot.key}}、{% endfor %}的设备的操作 
             会议控制垂域：预定会议、查看当前用户预约的会议、取消当前用户预定的某个会议
@@ -32,4 +37,6 @@ class DivideDomainPrompt(BasePrompt):
 
     def _prompt(self):
         data = {'DEVICE_LIST': CONFIG.DEVICE_LIST}
-        return Template(source=self.template_content).render(data=data)
+        if self.extra_paras is not None:
+            data.update(self.extra_paras)
+        return Template(source=self._template_content).render(data=data)

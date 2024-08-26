@@ -41,4 +41,5 @@ class SysSpecialResCode:
 
     LLM_ERROR = 10404  # LLM模型推理失败，请检查API-KEY有效性
     LLM_JSON_ERROR = 10405  # LLM提取槽位数据失败，请联系开发人员查看或者提供标准文本
+    CHAT_LOG_WARNING = 10406  # 对话信息不存在，可能有效期已过
 
