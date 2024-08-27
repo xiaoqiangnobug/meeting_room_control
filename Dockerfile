@@ -1,4 +1,4 @@
-FROM arm64v8/ubuntu:22.04
+FROM ubuntu:22.04
 
 # 镜像元信息
 LABEL MAINTAINER=weikaiqiang
@@ -7,7 +7,6 @@ ENV LANG=C.UTF-8
 
 # 安装必要的依赖包
 RUN mkdir -p /opt/project /opt/log /opt/py_virtualenvs /opt/setup && \
-        chmod 1777 /tmp/ && \
         apt update && \
         apt install --no-install-recommends ca-certificates --reinstall -y && \
         apt install --no-install-recommends tzdata -y
