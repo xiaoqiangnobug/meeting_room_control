@@ -35,6 +35,7 @@ class ChatControl:
         self.domain = ''
         self.previous_domain = ''
         self.chat_messages = []  # 聊天信息
+        self.chat_state = 'PROCESSING'
 
     @staticmethod
     async def _get_redis_obj(name: str):
@@ -104,6 +105,7 @@ class ChatControl:
                 {'role': 'user', 'content': self.query}
             ]
             ans = await chat_client_ty_plus.json_chat(messages=msgs)
+            self.chat_state = 'FINISH'
         else:
             raise CustomError(msg='暂不支持的垂域', code=SysResCode.DATA_STATE_ERROR)
 
@@ -114,5 +116,5 @@ class ChatControl:
             'domain': self.domain,
             'action': ans['action'],
             'slot_map': ans.get('slotMap', {}),
-            'dialog_status': {'status': 'PROCESSING', 'turns': self.turns}
+            'dialog_status': {'status': self.chat_state, 'turns': self.turns}
         }
