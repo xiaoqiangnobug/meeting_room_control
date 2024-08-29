@@ -13,7 +13,6 @@ Date: 2024/7/30 22:56
 """
 
 import base64
-import io
 import json
 import logging
 from fastapi import APIRouter
@@ -21,7 +20,7 @@ from utils.sys_format_res import async_normal_response
 from .req_data import ControlChatReqData, AddChatHistory
 from .res_data import ControlChatResData
 from apps.control.servers import ChatControl
-from libs.grpc_client.asr_client import audio_to_text
+from libs.asr_client import audio_to_text
 from utils.sys_db_connect import app_redis
 from utils.sys_error import CustomError
 from utils.sys_consts import SysSpecialResCode
@@ -39,7 +38,7 @@ async def control_chat(req_data: ControlChatReqData):
     audio = messages[-1].audio_content
     if audio:
         audio = base64.b64decode(audio)
-        messages[-1].content = await audio_to_text(audio=io.BytesIO(audio))
+        messages[-1].content = await audio_to_text(audio=audio)
         messages[-1].audio_content = ''
 
     result = await ChatControl(chat_id=req_data.chat_id, query=messages[-1].content).answer()

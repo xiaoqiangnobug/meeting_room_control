@@ -8,6 +8,9 @@ Author: xiaoqiang
 
 Explanation: 
 
-Date: 2024/6/8 15:15
+Date: 2024/8/28 15:45
 
 """
+
+from .main import audio_to_text
+

@@ -13,7 +13,7 @@ Date: 2024/8/25 22:23
 """
 import json
 
-from libs.llm_chat import chat_client_ty_turbo
+from libs.llm_chat import chat_client_ty_turbo, chat_client_ty_plus
 from libs.prompts import DivideDomainPrompt, MeetingControlPrompt, IotControlPrompt, ChatControlPrompt
 from utils.sys_db_connect import app_redis
 from utils.sys_error import CustomError
@@ -32,7 +32,8 @@ class ChatControl:
         self.query = query
         self.chat_id = chat_id
         self.turns = 0
-        self.domain = None
+        self.domain = ''
+        self.previous_domain = ''
         self.chat_messages = []  # 聊天信息
 
     @staticmethod
@@ -49,30 +50,30 @@ class ChatControl:
         if chat_info:
             chat_info = json.loads(chat_info)
             self.chat_messages = chat_info['messages']
+            self.turns = chat_info['turns']
+            self.previous_domain = chat_info['domain']
+
         extra_paras = {'msgs': self.chat_messages}
         msgs = [
             {'role': 'system', 'content': DivideDomainPrompt(extra_paras=extra_paras).prompt},
             {'role': 'user', 'content': self.query}
         ]
         ans = await chat_client_ty_turbo.json_chat(messages=msgs)
-        res_data = {
-            'domain': ans['domain'],
-            'turns': 1
-        }
-        if chat_info:
-            if ans['domain'] == chat_info['domain']:
-                res_data['turns'] = chat_info['turns'] + 1
-            else:
-                res_data['turns'] = 1
-                # 清空上一轮的信息
-                self.chat_messages = [self.chat_messages[-1]]
-
-        self.turns = res_data['turns']
-        self.domain = res_data['domain']
-        return res_data
+        if ans['domain'] != self.previous_domain or ans['domain'] == 'chitchat-domain':
+            # 切换域或者闲聊域时-聊天记录清空对话轮数重置
+            self.turns = 1
+            self.chat_messages = []
+        else:
+            # 切换域聊天记录清空，对话轮数重置
+            self.turns += 1
+        self.domain = ans['domain']
 
     async def _chat_info_save(self):
-        self.chat_messages.append({'role': 'user', 'content': self.query})
+        if self.domain != 'chitchat-domain':
+            self.chat_messages.append({
+                'role': 'user',
+                'content': self.query
+            })
         data = {
             'messages': self.chat_messages[-20:],
             'domain': self.domain,
@@ -82,29 +83,27 @@ class ChatControl:
 
     async def answer(self):
         # 第一步判断域和会话轮数
+        extra_paras = {'msgs': self.chat_messages}
 
         await self._vertical_domain_division()
         if self.domain == 'iot-domain':
-            extra_paras = {'msgs': self.chat_messages}
             msgs = [
                 {'role': 'system', 'content': IotControlPrompt(extra_paras=extra_paras).prompt},
                 {'role': 'user', 'content': self.query}
             ]
-            ans = await chat_client_ty_turbo.json_chat(messages=msgs)
+            ans = await chat_client_ty_plus.json_chat(messages=msgs)
         elif self.domain == 'meeting-domain':
-            extra_paras = {'msgs': self.chat_messages}
             msgs = [
                 {'role': 'system', 'content': MeetingControlPrompt(extra_paras=extra_paras).prompt},
                 {'role': 'user', 'content': self.query}
             ]
-            ans = await chat_client_ty_turbo.json_chat(messages=msgs)
+            ans = await chat_client_ty_plus.json_chat(messages=msgs)
         elif self.domain == 'chitchat-domain':
-            extra_paras = {'msgs': self.chat_messages}
             msgs = [
                 {'role': 'system', 'content': ChatControlPrompt(extra_paras=extra_paras).prompt},
                 {'role': 'user', 'content': self.query}
             ]
-            ans = await chat_client_ty_turbo.json_chat(messages=msgs)
+            ans = await chat_client_ty_plus.json_chat(messages=msgs)
         else:
             raise CustomError(msg='暂不支持的垂域', code=SysResCode.DATA_STATE_ERROR)
 

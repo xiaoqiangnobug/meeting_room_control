@@ -18,6 +18,7 @@ from utils.sys_format_res import async_normal_response
 from .req_data import ChatReqData
 from libs.llm_chat import chat_client_ty_plus
 from utils.sys_db_connect import app_redis
+from sys_config import CONFIG
 
 logger = logging.getLogger('logger')
 router = APIRouter()
@@ -35,5 +36,7 @@ async def chat(req_data: ChatReqData):
         messages.extend(chat_obj)
     messages.extend([{'role': obj.role, 'content': obj.content} for obj in req_data.chat_messages])
     ans = await chat_client_ty_plus.chat(messages=messages)
-    await app_redis.set(name=req_data.chat_id, value=json.dumps(messages, ensure_ascii=False))
+    messages.append({{'role': 'system', 'content': ans}})
+    await app_redis.set(name=req_data.chat_id, value=json.dumps(messages, ensure_ascii=False),
+                        ex=CONFIG.CONVERSATION['max_history_num'])
     return ans

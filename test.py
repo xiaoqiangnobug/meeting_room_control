@@ -17,8 +17,8 @@ from libs.llm_chat import chat_client_ty_plus
 from libs.prompts import DivideDomainPrompt, MeetingControlPrompt, IotControlPrompt
 
 extra_paras = {'msgs': [
-    {'role': 'user', 'content': '预订会议'},
-    {'role': 'system', 'content': '好的预订了'},
+    #{'role': 'user', 'content': '打开空调'},
+    #{'role': 'system', 'content': '好的打开了'},
     # {'role': 'user', 'content': '预订早上十点的'},
     # {'role': 'system', 'content': '好的修改好了'},
     # {'role': 'user', 'content': ''},
@@ -27,10 +27,10 @@ extra_paras = {'msgs': [
 
 messages = [
     {'role': 'system', 'content': MeetingControlPrompt(extra_paras=extra_paras).prompt},
-    {'role': 'user', 'content': "主题是AI方案讨论"}
+    {'role': 'user', 'content': "预订会议"}
 ]
 
-print(MeetingControlPrompt(extra_paras=extra_paras).prompt)
+print(IotControlPrompt(extra_paras=extra_paras).prompt)
 
 start_time = time.time()
 print(chat_client_ty_plus._json_chat(messages=messages))

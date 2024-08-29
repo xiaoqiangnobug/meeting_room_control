@@ -40,7 +40,6 @@ class BaseChatTyClient:
                 temperature=0.0
             )
             logger.info(msg=f'推理耗时: {time.time() - start_time}')
-            print(res)
             return self._format_msg(msg=res.choices[0].message.content)
         except Exception as e:
             logger.error(msg=f'输入信息 {json.dumps(messages, ensure_ascii=False)} 推理失败', exc_info=e)
