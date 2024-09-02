@@ -24,7 +24,6 @@ class IotControlPrompt(BasePrompt):
     def _template_content(self):
         return """
     我需要你协助我根据聊天内容提取成标准的控制IOT设备的JSON数据
-    聊天内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} {% endfor %}
     提取规则如下：
     IOT垂域：实现对 {% for iot in data.DEVICE_LIST %}{{iot.key}}、{% endfor %}的设备的操作 
     规则一：意图字段提取，如果没有表明是那个设备可以通过规则的设置支持的动作来推测设备：
@@ -41,9 +40,14 @@ class IotControlPrompt(BasePrompt):
     槽位提取注意多选值和单选值，没有表明多选值的都是单选值，注意多选值的大小写数字,注意会议控制时的日期提取
     提取槽位值时需要根据聊天记录从槽位的可选值中提取
     设备名称参考IOT设备列表
+    规则三: 
+    如果槽位信息中包含deviceIndex字段，如果用户明确的表达了需要操作的设备索引并且设备所以在可选值内则输出索引值，如果无法准确的推断出设备索引则deviceIndex的值为None
+    
+    聊天内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
+    {% endfor %}聊天内容可能为空
     完整输出举例：
     文本：帮我禁用蜂鸣模式 输出: {"domain": "iot-domain", "action": "update_device_status", "slotMap": {"deviceName": "环境检测", "deviceStatus": "蜂鸣模式设置", "status": "禁用"}}
-    现在的时间是：{{data.DATATIME}},按照规则，直接输出可以使用的JSON原本数据不需要其它任何格式
+    现在的时间是：{{data.DATATIME}},结合上下文推测目前用户要进行的操作按按照规则直接输出可以使用的JSON原本数据不需要其它任何格式
             """
 
     def _prompt(self, **kwargs):

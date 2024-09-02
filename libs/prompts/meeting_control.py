@@ -22,9 +22,7 @@ class MeetingControlPrompt(BasePrompt):
 
     @property
     def _template_content(self):
-        return """结合上下文内容根据输入提取JSON数据
-        上下文: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
-        {% endfor %}
+        return """我需要你协助我根据聊天内容提取成标准的控制IOT设备的JSON数据
         提取规则如下：
         规则一: 会议控制垂域意图有：{% for obj in data.MEETING_INTENT %}(意图解释: {{obj.name}}, 意图值: {{obj.key}})、{% endfor %}
         JSON字段的名称: action
@@ -36,9 +34,10 @@ class MeetingControlPrompt(BasePrompt):
         注意开始时间和节数时间的隐藏规则：
             因为时间是不可逆的比如当前时间是 14:00 用户需要要求预约13:00的开始的会议则这个时间条件不存在，需要往后推算寻找匹配的时间明天13:00的事件还存在则判定的时间应该是明天的13:00
         时间信息使用 %Y-%m-%d %H:%M:%S 格式来表示
-        严格按照规则来进行识别
+         聊天内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
+    {% endfor %}聊天内容可能为空
         完整输出举例：文本：帮我预约明天的会议 输出: {"action": "book_a_meeting", "slotMap": {"startTime": "2021-08-27 08:00:00", "endTime": "2021-08-27 08:30:00", "meetingTheme": "默认会议"}}
-        现在的时间是：{{data.DATATIME}} 直接输出可以使用的JSON原本数据不需要其它任何格式"""
+        现在的时间是：{{data.DATATIME}} 结合上下文推测目前用户要进行的操作按按照规则直接输出可以使用的JSON原本数据不需要其它任何格式"""
 
     def _prompt(self):
         data = {
