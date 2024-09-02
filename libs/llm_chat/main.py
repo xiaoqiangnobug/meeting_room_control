@@ -54,7 +54,12 @@ class BaseChatTyClient:
         # 模型JSON数据提取
         ans = self._chat(messages=messages)
         try:
-            return json.loads(ans)
+            ans_json = json.loads(ans)
+            # 特殊格式处理
+            if 'slotMap' in ans_json:
+                if 'deviceIndex' in ans_json['slotMap'] and ans_json['slotMap']['deviceIndex'] == 'none':
+                    ans_json['slotMap']['deviceIndex'] = None
+            return ans_json
         except Exception as e:
             logger.warning(msg='首次提取异常,重新尝试', exc_info=e)
             messages.extend([
@@ -65,7 +70,7 @@ class BaseChatTyClient:
             try:
                 return json.loads(ans)
             except Exception as e:
-                logger.error(msg=f'输入 {messages} 推理失败', exc_info=e)
+                logger.error(msg=f'输入 {messages} 推理失败, 推理结果{ans}', exc_info=e)
                 raise CustomError(code=SysSpecialResCode.LLM_JSON_ERROR, msg=SysSpecialResCode.LLM_JSON_ERROR)
 
     async def chat(self, messages: list):
