@@ -34,10 +34,17 @@ class MeetingControlPrompt(BasePrompt):
         注意开始时间和节数时间的隐藏规则：
             因为时间是不可逆的比如当前时间是 14:00 用户需要要求预约13:00的开始的会议则这个时间条件不存在，需要往后推算寻找匹配的时间明天13:00的事件还存在则判定的时间应该是明天的13:00
         时间信息使用 %Y-%m-%d %H:%M:%S 格式来表示
-         聊天内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
-    {% endfor %}聊天内容可能为空
-        完整输出举例：文本：帮我预约明天的会议 输出: {"action": "book_a_meeting", "slotMap": {"startTime": "2021-08-27 08:00:00", "endTime": "2021-08-27 08:30:00", "meetingTheme": "默认会议"}}
-        现在的时间是：{{data.DATATIME}} 结合上下文推测目前用户要进行的操作按按照规则直接输出可以使用的JSON原本数据不需要其它任何格式"""
+         聊天内容: 
+         {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
+         {% endfor %}聊天内容可能为空
+        完整输出举例：
+        聊天内容：
+            user: 预订会议 
+            system: 好的已经帮您预约了，2024-08-28 16:00:00开始2024-08-28 18:00:00结束会议 
+            文本：查看我的会议信息
+            输出：{"action": "check_meeting_schedule", "slotMap": {"startTime": "2024-08-28 16:00:00", "endTime": "2024-08-28 18:00:00"}}
+        注意：查看会议信息意图时，开始和结束时间首先从聊天记录中寻找，没有明确时间时再使用默认时间
+        现在的时间是：{{data.DATATIME}} 结合聊天记录推测目前用户要进行的操作按按照规则直接输出可以使用的JSON原本数据不需任何格式"""
 
     def _prompt(self):
         data = {
