@@ -33,7 +33,7 @@ messages = [
 ]
 
 print(MeetingControlPrompt(extra_paras=extra_paras).prompt)
-for _ in range(10):
+for _ in range(2):
     start_time = time.time()
     print(chat_client_ty_plus._chat(messages=messages))
     print(time.time() - start_time)
