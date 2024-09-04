@@ -46,7 +46,7 @@ class IotControlPrompt(BasePrompt):
     聊天内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
     {% endfor %}聊天内容可能为空
     完整输出举例：
-    文本：帮我禁用蜂鸣模式 输出: {"domain": "iot-domain", "action": "update_device_status", "slotMap": {"deviceName": "环境检测", "deviceStatus": "蜂鸣模式设置", "status": "禁用"}}
+    文本：打开第一个控制面板 输出: {"domain": "iot-domain", "action": "open_device", "slotMap": {"deviceName": "智能控制面板", "deviceIndex": 1}}
     现在的时间是：{{data.DATATIME}},结合上下文推测目前用户要进行的操作按按照规则直接输出可以使用的JSON原本数据不需要其它任何格式
             """
 
