@@ -12,12 +12,15 @@ Date: 2024/8/25 22:23
 
 """
 import json
+import logging
 
 from libs.llm_chat import chat_client_ty_turbo, chat_client_ty_plus
 from libs.prompts import DivideDomainPrompt, MeetingControlPrompt, IotControlPrompt, ChatControlPrompt
 from utils.sys_db_connect import app_redis
 from utils.sys_error import CustomError
 from utils.sys_consts import SysResCode
+
+logger = logging.getLogger('logger')
 
 
 class ChatControl:
@@ -49,10 +52,10 @@ class ChatControl:
         # 垂域划分&聊天轮数判断
         chat_info = await self._get_redis_obj(name=self.chat_id)
         if chat_info:
-            chat_info = json.loads(chat_info)
-            self.chat_messages = chat_info['messages']
-            self.turns = chat_info['turns']
-            self.previous_domain = chat_info['domain']
+            chat_json = json.loads(chat_info)
+            self.chat_messages = chat_json['messages']
+            self.turns = chat_json['turns']
+            self.previous_domain = chat_json['domain']
 
         extra_paras = {'msgs': self.chat_messages}
         msgs = [
@@ -60,6 +63,7 @@ class ChatControl:
             {'role': 'user', 'content': self.query}
         ]
         ans = await chat_client_ty_turbo.json_chat(messages=msgs)
+        logger.info(msg=f'推理域: {ans["domain"]}  上一次: {self.previous_domain}')
         if ans['domain'] != self.previous_domain or ans['domain'] == 'chitchat-domain':
             # 切换域或者闲聊域时-聊天记录清空对话轮数重置
             self.turns = 1
@@ -84,9 +88,9 @@ class ChatControl:
 
     async def answer(self):
         # 第一步判断域和会话轮数
-        extra_paras = {'msgs': self.chat_messages}
 
         await self._vertical_domain_division()
+        extra_paras = {'msgs': self.chat_messages}
         if self.domain == 'iot-domain':
             msgs = [
                 {'role': 'system', 'content': IotControlPrompt(extra_paras=extra_paras).prompt},
