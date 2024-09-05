@@ -41,12 +41,13 @@ class IotControlPrompt(BasePrompt):
     提取槽位值时需要根据聊天记录从槽位的可选值中提取
     设备名称参考IOT设备列表
     规则三: 
-    如果槽位信息中包含deviceIndex字段，如果用户明确的表达了需要操作的设备索引并且设备所以在可选值内则输出索引值，如果无法准确的推断出设备索引则deviceIndex的值为None
+    如果槽位信息中包含deviceIndex字段，如果用户明确的表达了需要操作的设备索引并且设备所以在可选值内则输出索引值，如果无法准确的推断出设备索引则deviceIndex的值为"null"用双引号括起来的
     
     聊天内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
     {% endfor %}聊天内容可能为空
     完整输出举例：
     文本：打开第一个控制面板 输出: {"domain": "iot-domain", "action": "open_device", "slotMap": {"deviceName": "智能控制面板", "deviceIndex": 1}}
+    注意摄像头的复位操作不是reset_device意图属于update_device_status意图,打开窗帘时注意switch槽位必须提取
     现在的时间是：{{data.DATATIME}},结合上下文推测目前用户要进行的操作按按照规则直接输出可以使用的JSON原本数据不需要其它任何格式
             """
 

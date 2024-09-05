@@ -57,7 +57,7 @@ class BaseChatTyClient:
             ans_json = json.loads(ans)
             # 特殊格式处理
             if 'slotMap' in ans_json:
-                if 'deviceIndex' in ans_json['slotMap'] and ans_json['slotMap']['deviceIndex'] == 'none':
+                if 'deviceIndex' in ans_json['slotMap'] and ans_json['slotMap']['deviceIndex'] in ['none', 'None', 'null']:
                     ans_json['slotMap']['deviceIndex'] = None
             return ans_json
         except Exception as e:
