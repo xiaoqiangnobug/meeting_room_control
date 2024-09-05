@@ -40,6 +40,7 @@ class BaseChatTyClient:
                 temperature=0.0
             )
             logger.info(msg=f'推理耗时: {time.time() - start_time}')
+            print(res.choices[0].message.content)
             return self._format_msg(msg=res.choices[0].message.content)
         except Exception as e:
             logger.error(msg=f'输入信息 {json.dumps(messages, ensure_ascii=False)} 推理失败', exc_info=e)
@@ -57,7 +58,8 @@ class BaseChatTyClient:
             ans_json = json.loads(ans)
             # 特殊格式处理
             if 'slotMap' in ans_json:
-                if 'deviceIndex' in ans_json['slotMap'] and ans_json['slotMap']['deviceIndex'] in ['none', 'None', 'null']:
+                if 'deviceIndex' in ans_json['slotMap'] and ans_json['slotMap']['deviceIndex'] in ['none', 'None',
+                                                                                                   'null']:
                     ans_json['slotMap']['deviceIndex'] = None
             return ans_json
         except Exception as e:
@@ -95,3 +97,9 @@ class ChatClientTyTurbo(BaseChatTyClient):
         if msg.startswith('```'):
             return msg[7:-3]
         return msg
+
+    def _json_chat(self, messages: list):
+        ans = super()._json_chat(messages=messages)
+        if ans['domain'] == 'recording-domain':
+            ans['domain'] = 'iot-domain'
+        return ans
