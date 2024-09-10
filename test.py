@@ -20,29 +20,46 @@ from libs.prompts import DivideDomainPrompt, MeetingControlPrompt, IotControlPro
 extra_paras = {'msgs': [
     {
         "role": "user",
-        "content": "暂停录制"
+        "content": "打开空调"
     },
     {
-        "role": "sytem",
-        "content": "好的暂停了"
+        "role": "system",
+        "content": "室内有两台空调，您想打开第几台"
     },
     {
         "role": "user",
-        "content": "暂停录制"
+        "content": "打开第一台"
     },
     {
-        "role": "sytem",
-        "content": "好的暂停了"
+        "role": "system",
+        "content": "是否确认打开第一台空调"
+    },
+    {
+        "role": "user",
+        "content": "确认打开"
+    },
+    {
+        "role": "system",
+        "content": "好的已经打开了"
+    },
+    {
+        "role": "user",
+        "content": "打开第二台空调"
+    },
+    {
+        "role": "system",
+        "content": "好的打开了"
     }
-]}
+]
+}
 
 messages = [
-    {'role': 'user', 'content': DivideDomainPrompt(extra_paras=extra_paras).prompt},
-    {'role': 'user', 'content': "停止录制"}
+    {'role': 'user', 'content': IotControlPrompt(extra_paras=extra_paras).prompt},
+    {'role': 'user', 'content': "调整为制冷模式"}
 ]
 
-print(DivideDomainPrompt(extra_paras=extra_paras).prompt)
+print(IotControlPrompt(extra_paras=extra_paras).prompt)
 print(messages[1])
-for _ in range(3):
+for _ in range(5):
     # print(chat_client_ty_turbo._json_chat(messages=messages))
-    print(asyncio.run(chat_client_ty_turbo.json_chat(messages=messages)))
+    print(asyncio.run(chat_client_ty_plus.json_chat(messages=messages)))
