@@ -30,13 +30,14 @@ class DivideDomainPrompt(BasePrompt):
             会议控制垂域：预定会议、查看当前用户预约的会议、取消当前用户预定的某个会议
             闲聊垂域：大模型开放域问答
             JSON字段名称：domain
-            实例：
-            文本是：对xxx设备操作相关，对IOT设备操作相关domain字段的值是: iot-domain 
-            文本是：预订明天的会议室，对会议控制相关domain字段的值是: meeting-domain
+            示例：
+                文本是：对xxx设备操作相关，对IOT设备操作相关domain字段的值是: iot-domain 
+                文本是：预订明天的会议室，对会议控制相关domain字段的值是: meeting-domain
+                文本是：合成模式的设置，domain字段的值是：iot-domain
             不是控制IOT和会议相关的就属于闲聊垂域domain字段的值是: chitchat-domain
             聊天内容: {% for obj in data.msgs %} 
             {{obj.role}}: {{obj.content}} {% endfor %}
-            聊天记录肯可能为空 
+            聊天记录肯可能为空
             推理IOT设备推理时有一点需要注意下，如果用户表达的是 不打开xxx这样的否定词可以归类为关闭xxx设备
             domain的值只能从[iot-domain, meeting-domain, chitchat-domain]中选择一个禁止胡编乱造
             结合聊天记录根据规则提取直接按照要求输出结果不需要其他任何输出

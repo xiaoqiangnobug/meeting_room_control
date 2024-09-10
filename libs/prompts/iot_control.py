@@ -65,6 +65,7 @@ class IotControlPrompt(BasePrompt):
         文本：将送风模式调整为高 输出: {"action": "update_device_status", "slotMap": {"deviceName": "空调控制器", "deviceIndex": 2, "deviceStatus": "送风模式设置", "status": "高"}}
         文本：帮我五秒后开启gw开关 输出：{"action": "open_device_regular", "slotMap": {"deviceName": "GW开关", "deviceIndex": "none", "mode": "LATER", "timeValue": 5, "timeCycle": "s"}
         文本：现在的时间时: 2024-09-10 15:00:00 晚上八点关闭电源开关 输出: {"action": "close_device_regular", "slotMap": {"deviceName": "GW开关", "deviceIndex": "none", "mode": "FIX_TIME", "timeValue": "2024-09-10 20:00:00", "timeCycle": "s"}
+        文本：帮我解锁第一个Gw开关 输出: {"action": "update_device_status", "slotMap": {"deviceName": "GW开关", "deviceIndex": 1, "deviceStatus": "解锁"}}
     现在的聊天对话内容: {% for obj in data.msgs %} {{obj.role}}: {{obj.content}} 
     {% endfor %}聊天内容可能为空
     注意摄像头的复位操作不是reset_device意图属于update_device_status意图，根据规则所有的槽位在对应的可选值中或者根据说明来提取，根据规则槽位信息必须提取完整
