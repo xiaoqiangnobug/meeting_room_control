@@ -24,6 +24,7 @@ from libs.asr_client import audio_to_text
 from utils.sys_db_connect import app_redis
 from utils.sys_error import CustomError
 from utils.sys_consts import SysSpecialResCode
+from sys_config import CONFIG
 
 router = APIRouter()
 
@@ -55,12 +56,12 @@ async def add_chat_history(req_data: AddChatHistory):
     if not chat_str:
         raise CustomError(msg='未找到有效的对话信息', code=SysSpecialResCode.CHAT_LOG_WARNING)
     chat_obj = json.loads(chat_str)
-    messages = chat_obj['messages']
     for obj in req_data.chat_messages:
-        messages.append({
+        chat_obj['messages'].append({
             'role': obj.role,
             'content': obj.content
         })
-    await app_redis.set(name=req_data.chat_id, value=json.dumps(chat_obj, ensure_ascii=False))
+    await app_redis.set(name=req_data.chat_id, value=json.dumps(chat_obj, ensure_ascii=False),
+                        ex=CONFIG.CONVERSATION['max_history_num'])
 
     return True

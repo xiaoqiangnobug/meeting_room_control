@@ -19,6 +19,7 @@ from libs.prompts import DivideDomainPrompt, MeetingControlPrompt, IotControlPro
 from utils.sys_db_connect import app_redis
 from utils.sys_error import CustomError
 from utils.sys_consts import SysResCode
+from sys_config import CONFIG
 
 logger = logging.getLogger('logger')
 
@@ -84,7 +85,8 @@ class ChatControl:
             'domain': self.domain,
             'turns': self.turns
         }
-        await app_redis.set(name=self.chat_id, value=json.dumps(data, ensure_ascii=False), ex=3600)
+        await app_redis.set(name=self.chat_id, value=json.dumps(data, ensure_ascii=False),
+                            ex=CONFIG.CONVERSATION['max_history_num'])
 
     async def answer(self):
         # 第一步判断域和会话轮数
