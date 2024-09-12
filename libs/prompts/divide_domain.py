@@ -31,9 +31,11 @@ class DivideDomainPrompt(BasePrompt):
             闲聊垂域：大模型开放域问答
             JSON字段名称：domain
             示例：
-                文本是：对xxx设备操作相关，对IOT设备操作相关domain字段的值是: iot-domain 
-                文本是：预订明天的会议室，对会议控制相关domain字段的值是: meeting-domain
-                文本是：合成模式的设置，domain字段的值是：iot-domain
+                文本：对xxx设备操作相关，对IOT设备操作相关domain字段的值是: iot-domain 
+                文本：预订明天的会议室，对会议控制相关domain字段的值是: meeting-domain
+                文本：合成模式的设置，domain字段的值是：iot-domain
+                文本：设置导播合成模式为xxx, domain字段的值是：iot-domain
+                文本：开启/停止直播, domain字段的值是：iot-domain
             不是控制IOT和会议相关的就属于闲聊垂域domain字段的值是: chitchat-domain
             聊天内容: {% for obj in data.msgs %} 
             {{obj.role}}: {{obj.content}} {% endfor %}
