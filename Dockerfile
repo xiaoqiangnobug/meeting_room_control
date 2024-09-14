@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM arm64v8/ubuntu:22.04
 
 # 镜像元信息
 LABEL MAINTAINER=weikaiqiang
