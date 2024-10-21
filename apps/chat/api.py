@@ -6,7 +6,7 @@ File: api.py
 
 Author: xiaoqiang
 
-Explanation: 
+Explanation:
 
 Date: 2024/8/3 12:30
 
