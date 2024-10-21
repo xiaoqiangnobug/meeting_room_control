@@ -1,0 +1,2 @@
+# 保留Dockerfile文件的分支独立
+Dockerfile merge=ours
