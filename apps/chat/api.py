@@ -30,7 +30,7 @@ async def chat(req_data: ChatReqData):
     # 闲聊接口
 
     chat_str = await app_redis.get(name=f'{req_data.chat_id}_chat')
-    messages = []
+    messages = [{'role': 'system', 'content': '所有的问题都必须用中文回答，直接用中文回答即可'}]
     if chat_str:
         chat_obj = json.loads(chat_str)
         messages.extend(chat_obj)
